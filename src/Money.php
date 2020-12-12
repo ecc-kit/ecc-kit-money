@@ -42,7 +42,7 @@ class Money
     /**
      * Currency.
      *
-     * @return \EccKit\Money\Currency
+     * @return Currency
      */
     public function getCurrency(): Currency
     {
