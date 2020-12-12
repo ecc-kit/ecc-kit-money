@@ -18,7 +18,7 @@ class MoneyCollection extends Collection
      */
     protected function validateElement($element): bool
     {
-        if ($element instanceof Money) {
+        if (!($element instanceof Money)) {
             throw new ArgumentException(Money::class);
         }
     }

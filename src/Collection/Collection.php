@@ -52,7 +52,6 @@ abstract class Collection extends ArrayCollection
             );
         }
         
-        
         return parent::add($element);
     }
     
