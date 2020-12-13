@@ -32,6 +32,22 @@ class Money
     }
     
     /**
+     * CreateFromImmutable
+     *
+     * @param MoneyImmutable $money Money
+     *
+     * @return Money
+     */
+    public static function createFromImmutable(MoneyImmutable $money): Money
+    {
+        return new static(
+            $money->getValue(),
+            $money->getCurrency(),
+            $money->getCalculator()
+        );
+    }
+    
+    /**
      * Money value.
      *
      * @return float
@@ -49,6 +65,16 @@ class Money
     public function getCurrency(): Currency
     {
         return $this->currency;
+    }
+    
+    /**
+     * Calculator.
+     *
+     * @return Calculator
+     */
+    public function getCalculator(): Calculator
+    {
+        return $this->calculator;
     }
     
     /**
