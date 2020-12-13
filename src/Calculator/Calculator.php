@@ -15,9 +15,9 @@ class Calculator
      *
      * @param Money ...$monies Monies
      *
-     * @return Money
+     * @return float
      */
-    public function add(Money ...$monies): Money
+    public function add(Money ...$monies): float
     {
         $result = 0;
         foreach ($this->prepareMonies($monies) as $value) {
@@ -32,9 +32,9 @@ class Calculator
      *
      * @param Money ...$monies Monies
      *
-     * @return Money
+     * @return float
      */
-    public function sub(Money ...$monies): Money
+    public function sub(Money ...$monies): float
     {
         $result = 0;
         foreach ($this->prepareMonies($monies) as $value) {
@@ -50,9 +50,9 @@ class Calculator
      * @param Money $money Money
      * @param float $value Value
      *
-     * @return Money
+     * @return float
      */
-    public function mul(Money $money, float $value): Money
+    public function mul(Money $money, float $value): float
     {
         return $money->getValue() * $value;
     }
@@ -63,9 +63,9 @@ class Calculator
      * @param Money $money Money
      * @param float $value Value
      *
-     * @return Money
+     * @return float
      */
-    public function div(Money $money, float $value): Money
+    public function div(Money $money, float $value): float
     {
         return $money->getValue() / $value;
     }
@@ -75,7 +75,7 @@ class Calculator
      *
      * @param Money ...$monies
      *
-     * @return array
+     * @return array<Money>
      */
     protected function prepareMonies(Money ...$monies): array
     {
