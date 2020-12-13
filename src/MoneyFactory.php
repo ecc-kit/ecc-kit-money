@@ -48,14 +48,4 @@ class MoneyFactory
     {
         return $this->calculator;
     }
-    
-    /**
-     * Default currency.
-     *
-     * @return Currency
-     */
-    public function getCurrency(): Currency
-    {
-        return $this->currency;
-    }
 }
