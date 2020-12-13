@@ -14,7 +14,7 @@ class MoneyImmutable extends Money
      *
      * @return $this
      */
-    protected function modify(float $value): Money
+    protected function modify(float $value): MoneyImmutable
     {
         return new static(
             $value,
