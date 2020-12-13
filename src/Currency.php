@@ -74,6 +74,6 @@ class Currency
      */
     public function getSymbol(): string
     {
-        return $this->getSymbol();
+        return $this->symbol;
     }
 }
