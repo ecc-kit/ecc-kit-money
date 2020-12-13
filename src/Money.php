@@ -1,34 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace EccKit\Money;
 
-use EccKit\Wallet\Calculator\Calculator;
+use EccKit\Money\Calculator\Calculator;
+use EccKit\Money\Formatter\Formatter;
 
 /**
  * Class Money.
  */
 class Money
 {
-    /** @var float Money value */
-    protected float $value;
+    /** @var int Money value */
+    protected int $value;
     /** @var Currency Currency */
     protected Currency $currency;
     /** @var Calculator Calculator */
     protected Calculator $calculator;
+    /** @var Formatter Formatter */
+    protected Formatter $formatter;
     
     /**
      * Money constructor.
      *
-     * @param float      $value      Value
+     * @param int        $value      Value
      * @param Currency   $currency   Currency
      * @param Calculator $calculator Calculator
+     * @param Formatter  $formatter  Formatter
      */
-    public function __construct(float $value, Currency $currency, Calculator $calculator)
+    public function __construct(int $value, Currency $currency, Calculator $calculator, Formatter $formatter)
     {
+        $this->value = $value;
         $this->currency = $currency;
         $this->calculator = $calculator;
-        
-        $this->value = $this->toAccuracy($value, $this->getCurrency()->getDecimal());
+        $this->formatter = $formatter;
     }
     
     /**
@@ -50,9 +56,9 @@ class Money
     /**
      * Money value.
      *
-     * @return float
+     * @return int
      */
-    public function getValue(): float
+    public function getValue(): int
     {
         return $this->value;
     }
@@ -75,6 +81,16 @@ class Money
     public function getCalculator(): Calculator
     {
         return $this->calculator;
+    }
+    
+    /**
+     * Formatter.
+     *
+     * @return Formatter
+     */
+    public function getFormatter(): Formatter
+    {
+        return $this->formatter;
     }
     
     /**
@@ -108,13 +124,14 @@ class Money
     /**
      * Multiplication.
      *
-     * @param float $value Value
+     * @param int    $value        Value
+     * @param string $roundingMode Rounding Mode
      *
      * @return $this
      */
-    public function mul(float $value): Money
+    public function mul(int $value, string $roundingMode = Calculator::ROUND_MATH): Money
     {
-        $this->modify($this->getCalculator()->mul($this, $value));
+        $this->modify($this->getCalculator()->mul($this, $value, $roundingMode));
         
         return $this;
     }
@@ -122,40 +139,41 @@ class Money
     /**
      * Division.
      *
-     * @param float $value Value
+     * @param int    $value        Value
+     * @param string $roundingMode Rounding Mode
      *
      * @return $this
      */
-    public function div(float $value): Money
+    public function div(int $value, string $roundingMode = Calculator::ROUND_MATH): Money
     {
-        $this->modify($this->getCalculator()->div($this, $value));
+        $this->modify($this->getCalculator()->div($this, $value, $roundingMode));
         
         return $this;
+    }
+    
+    /**
+     * Format.
+     *
+     * @param string $format Format
+     *
+     * @return string
+     */
+    public function format(string $format = Formatter::FORMAT): string
+    {
+        return $this->getFormatter()->format($this, $format);
     }
     
     /**
      * Modify.
      *
-     * @param float $value Value
+     * @param int $value Value
      *
      * @return $this
      */
-    protected function modify(float $value): Money
+    protected function modify(int $value): Money
     {
-        $this->value = $this->toAccuracy($value);
+        $this->value = $value;
         
         return $this;
-    }
-    
-    /**
-     * To accuracy.
-     *
-     * @param float $value    Value
-     *
-     * @return float
-     */
-    protected function toAccuracy(float $value): float
-    {
-        return round($value, $this->getCurrency()->getDecimal());
     }
 }

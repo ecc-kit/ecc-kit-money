@@ -3,6 +3,7 @@
 namespace EccKit\Money;
 
 use EccKit\Money\Calculator\Calculator;
+use EccKit\Money\Formatter\Formatter;
 
 /**
  * Class MoneyFactory.
@@ -11,15 +12,19 @@ class MoneyFactory
 {
     /** @var Calculator Calculator */
     protected Calculator $calculator;
+    /** @var Formatter Formatter */
+    protected Formatter $formatter;
     
     /**
      * MoneyFactory constructor.
      *
      * @param Calculator $calculator Calculator
+     * @param Formatter  $formatter  Formatter
      */
-    public function __construct(Calculator $calculator)
+    public function __construct(Calculator $calculator, Formatter $formatter)
     {
         $this->calculator = $calculator;
+        $this->formatter = $formatter;
     }
     
     /**
@@ -35,7 +40,8 @@ class MoneyFactory
         return new Money(
             $value,
             $currency,
-            $this->getCalculator()
+            $this->getCalculator(),
+            $this->getFormatter()
         );
     }
     
@@ -47,5 +53,15 @@ class MoneyFactory
     public function getCalculator(): Calculator
     {
         return $this->calculator;
+    }
+    
+    /**
+     * Formatter.
+     *
+     * @return Formatter
+     */
+    public function getFormatter(): Formatter
+    {
+        return $this->formatter;
     }
 }

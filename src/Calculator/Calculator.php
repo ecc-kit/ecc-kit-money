@@ -10,18 +10,25 @@ use InvalidArgumentException;
  */
 class Calculator
 {
+    /** Math rounding */
+    public const ROUND_MATH = 'ROUND_MATH';
+    /** Always up */
+    public const ROUND_UP = 'ROUND_UP';
+    /** Always down */
+    public const ROUND_DOWN = 'ROUND_DOWN';
+    
     /**
      * Addition.
      *
      * @param Money ...$monies Monies
      *
-     * @return float
+     * @return int
      */
-    public function add(Money ...$monies): float
+    public function add(Money ...$monies): int
     {
         $result = 0;
         foreach ($this->prepareMonies($monies) as $value) {
-            $result += $value;
+            $result += (int) $value;
         }
         
         return $result;
@@ -32,13 +39,13 @@ class Calculator
      *
      * @param Money ...$monies Monies
      *
-     * @return float
+     * @return int
      */
-    public function sub(Money ...$monies): float
+    public function sub(Money ...$monies): int
     {
         $result = 0;
         foreach ($this->prepareMonies($monies) as $value) {
-            $result -= $value;
+            $result -= (int) $value;
         }
     
         return $result;
@@ -48,26 +55,42 @@ class Calculator
      * Multiplication.
      *
      * @param Money $money Money
-     * @param float $value Value
+     * @param int $value Value
      *
-     * @return float
+     * @return int
      */
-    public function mul(Money $money, float $value): float
+    public function mul(Money $money, int $value, string $roundingMode): int
     {
-        return $money->getValue() * $value;
+        return (int) $money->getValue() * $value;
     }
     
     /**
      * Division.
      *
      * @param Money $money Money
-     * @param float $value Value
+     * @param int $value Value
      *
-     * @return float
+     * @return int
      */
-    public function div(Money $money, float $value): float
+    public function div(Money $money, int $value, string $roundingMode): int
     {
-        return $money->getValue() / $value;
+        return (int) $money->getValue() / $value;
+    }
+    
+    /**
+     * Round.
+     *
+     * @param float  $value        Value
+     * @param int    $precision    Precision
+     * @param string $roundingMode Rounding Mode
+     *
+     * @return int
+     */
+    public function round(float $value, int $precision, string $roundingMode): int
+    {
+        /** @todo: Implement this */
+        
+        return $value;
     }
     
     /**
@@ -79,7 +102,7 @@ class Calculator
      */
     protected function prepareMonies(Money ...$monies): array
     {
-        $currency = null;
+        $currency = '';
         $values = [];
         foreach ($monies as $money) {
             if (!$currency) {
