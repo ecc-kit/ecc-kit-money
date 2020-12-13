@@ -2,6 +2,8 @@
 
 namespace EccKit\Money;
 
+use EccKit\Wallet\Calculator\Calculator;
+
 /**
  * Class Money.
  */
@@ -9,24 +11,24 @@ class Money
 {
     /** @var float Money value */
     protected float $value;
-    /** @var Currency */
+    /** @var Currency Currency */
     protected Currency $currency;
-    /** @var int */
-    protected int $accuracy;
+    /** @var Calculator Calculator */
+    protected Calculator $calculator;
     
     /**
      * Money constructor.
      *
-     * @param float    $value    Value
-     * @param Currency $currency Currency
-     * @param ?int     $accuracy Custom decimal currency value
+     * @param float      $value      Value
+     * @param Currency   $currency   Currency
+     * @param Calculator $calculator Calculator
      */
-    public function __construct(float $value, Currency $currency, ?int $accuracy = null)
+    public function __construct(float $value, Currency $currency, Calculator $calculator)
     {
         $this->currency = $currency;
-        $this->accuracy = $accuracy ?? $currency->getDecimal();
+        $this->calculator = $calculator;
         
-        $this->value = $this->toAccuracy($value, $this->getAccuracy());
+        $this->value = $this->toAccuracy($value, $this->getCurrency()->getDecimal());
     }
     
     /**
@@ -47,16 +49,6 @@ class Money
     public function getCurrency(): Currency
     {
         return $this->currency;
-    }
-    
-    /**
-     * Accuracy.
-     *
-     * @return int
-     */
-    public function getAccuracy(): int
-    {
-        return $this->accuracy;
     }
     
     /**
