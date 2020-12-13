@@ -6,7 +6,7 @@ use EccKit\Money\Calculator\Calculator;
 use EccKit\Money\Money;
 
 /**
- * Interface Formatter.
+ * Abstract Class Formatter.
  */
 abstract class Formatter
 {
