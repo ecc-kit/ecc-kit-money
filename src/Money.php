@@ -78,6 +78,20 @@ class Money
     }
     
     /**
+     * Modify.
+     *
+     * @param float $value Value
+     *
+     * @return $this
+     */
+    protected function modify(float $value): Money
+    {
+        $this->value = $value;
+        
+        return $this;
+    }
+    
+    /**
      * To accuracy.
      *
      * @param float $value    Value
