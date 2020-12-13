@@ -73,9 +73,9 @@ abstract class Collection extends ArrayCollection
     }
     
     /**
-     * Проверка типа элемента.
+     * Element type check.
      *
-     * @param mixed $element Элемент
+     * @param mixed $element Element
      *
      * @throws InvalidArgumentException
      *
