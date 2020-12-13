@@ -17,7 +17,7 @@ class MoneyImmutable extends Money
     protected function modify(float $value): MoneyImmutable
     {
         return new static(
-            $value,
+            $this->toAccuracy($value),
             $this->getCurrency(),
             $this->getCalculator()
         );

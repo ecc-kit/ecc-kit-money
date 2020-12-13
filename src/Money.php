@@ -142,7 +142,7 @@ class Money
      */
     protected function modify(float $value): Money
     {
-        $this->value = $value;
+        $this->value = $this->toAccuracy($value);
         
         return $this;
     }
@@ -151,12 +151,11 @@ class Money
      * To accuracy.
      *
      * @param float $value    Value
-     * @param int   $accuracy Currency
      *
      * @return float
      */
-    protected function toAccuracy(float $value, int $accuracy): float
+    protected function toAccuracy(float $value): float
     {
-        return round($value, $accuracy);
+        return round($value, $this->getCurrency()->getDecimal());
     }
 }
