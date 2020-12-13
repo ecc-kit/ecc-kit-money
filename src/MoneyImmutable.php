@@ -10,16 +10,17 @@ class MoneyImmutable extends Money
     /**
      * Modify.
      *
-     * @param float $value Value
+     * @param int $value Value
      *
      * @return $this
      */
-    protected function modify(float $value): MoneyImmutable
+    protected function modify(int $value): MoneyImmutable
     {
         return new static(
-            $this->toAccuracy($value),
+            $value,
             $this->getCurrency(),
-            $this->getCalculator()
+            $this->getCalculator(),
+            $this->getFormatter()
         );
     }
 }
