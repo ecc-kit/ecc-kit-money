@@ -4,6 +4,7 @@ namespace EccKit\Money\Formatter;
 
 use EccKit\Money\Calculator\Calculator;
 use EccKit\Money\Money;
+use InvalidArgumentException;
 
 /**
  * Abstract Class Formatter.
