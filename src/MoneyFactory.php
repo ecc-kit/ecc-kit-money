@@ -2,7 +2,7 @@
 
 namespace EccKit\Money;
 
-use EccKit\Wallet\Calculator\Calculator;
+use EccKit\Money\Calculator\Calculator;
 
 /**
  * Class MoneyFactory.
