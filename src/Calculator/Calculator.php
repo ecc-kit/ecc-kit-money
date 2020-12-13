@@ -3,11 +3,12 @@
 namespace EccKit\Money\Calculator;
 
 use EccKit\Money\Money;
+use InvalidArgumentException;
 
 /**
- * Interface Calculator.
+ * Class Calculator.
  */
-interface Calculator
+class Calculator
 {
     /**
      * Addition.
@@ -16,7 +17,15 @@ interface Calculator
      *
      * @return Money
      */
-    public function add(Money ...$monies): Money;
+    public function add(Money ...$monies): Money
+    {
+        $result = 0;
+        foreach ($this->prepareMonies($monies) as $value) {
+            $result += $value;
+        }
+        
+        return $result;
+    }
     
     /**
      * Subtraction.
@@ -25,7 +34,15 @@ interface Calculator
      *
      * @return Money
      */
-    public function sub(Money ...$monies): Money;
+    public function sub(Money ...$monies): Money
+    {
+        $result = 0;
+        foreach ($this->prepareMonies($monies) as $value) {
+            $result -= $value;
+        }
+    
+        return $result;
+    }
     
     /**
      * Multiplication.
@@ -35,7 +52,10 @@ interface Calculator
      *
      * @return Money
      */
-    public function mul(Money $money, float $value): Money;
+    public function mul(Money $money, float $value): Money
+    {
+        return $money->getValue() * $value;
+    }
     
     /**
      * Division.
@@ -45,5 +65,38 @@ interface Calculator
      *
      * @return Money
      */
-    public function div(Money $money, float $value): Money;
+    public function div(Money $money, float $value): Money
+    {
+        return $money->getValue() / $value;
+    }
+    
+    /**
+     * Monies prepare.
+     *
+     * @param Money ...$monies
+     *
+     * @return array
+     */
+    protected function prepareMonies(Money ...$monies): array
+    {
+        $currency = null;
+        $values = [];
+        foreach ($monies as $money) {
+            if (!$currency) {
+                $currency = $money->getCurrency();
+            }
+            
+            if ($currency->getCode() !== $money->getCurrency()->getCode()) {
+                throw new InvalidArgumentException(
+                    'currencies must be the same, first currency is %s, other currencies contain %s',
+                    $currency->getCode(),
+                    $money->getCurrency()->getCode()
+                );
+            }
+            
+            $values[] = $money->getValue();
+        }
+        
+        return $values;
+    }
 }
