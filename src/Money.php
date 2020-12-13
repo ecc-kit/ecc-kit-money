@@ -78,6 +78,62 @@ class Money
     }
     
     /**
+     * Addition.
+     *
+     * @param Money $money Money
+     *
+     * @return $this
+     */
+    public function add(Money $money): Money
+    {
+        $this->modify($this->getCalculator()->add($this, $money));
+        
+        return $this;
+    }
+    
+    /**
+     * Subtraction.
+     *
+     * @param Money $money Money
+     *
+     * @return $this
+     */
+    public function sub(Money $money): Money
+    {
+        $this->modify($this->getCalculator()->sub($this, $money));
+        
+        return $this;
+    }
+    
+    /**
+     * Multiplication.
+     *
+     * @param float $value Value
+     *
+     * @return $this
+     */
+    public function mul(float $value): Money
+    {
+        $this->modify($this->getCalculator()->mul($this, $value));
+        
+        return $this;
+    }
+    
+    /**
+     * Division.
+     *
+     * @param float $value Value
+     *
+     * @return $this
+     */
+    public function div(float $value): Money
+    {
+        $this->modify($this->getCalculator()->div($this, $value));
+        
+        return $this;
+    }
+    
+    /**
      * Modify.
      *
      * @param float $value Value
