@@ -2,16 +2,37 @@
 
 namespace EccKit\Money\Formatter;
 
-use EccKit\Money\Calculator\Calculator;
 use EccKit\Money\Money;
 
 /**
- * Interface Formatter.
+ * Class CurrencyFormatter.
  */
-class CurrencyFormatter extends Formatter
+class CurrencyFormatter
 {
+    /** Default format template */
+    public const FORMAT = '%s%f';
+    
     /**
-     * {@inheritdoc}
+     * Format.
+     *
+     * @param Money  $money  Money
+     * @param string $format Format
+     *
+     * @return mixed
+     */
+    public function format(Money $money, string $format = self::FORMAT): string
+    {
+        $map = $this->getMap($money);
+        
+        return str_replace(
+            array_keys($map),
+            array_values($map),
+            $format
+        );
+    }
+    
+    /**
+     * Placeholders value map.
      *
      * @param Money $money Money
      *
@@ -19,6 +40,9 @@ class CurrencyFormatter extends Formatter
      */
     protected function getMap(Money $money): array
     {
-        // TODO: Implement getMap() method.
+        return [
+            '%s' => $money->getCurrency()->getSymbol(),
+            '%f' => $money->getValue() / $money->getCurrency()->getDecimal(),
+        ];
     }
 }

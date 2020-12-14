@@ -158,7 +158,7 @@ class Money
      *
      * @return string
      */
-    public function format(string $format = Formatter::FORMAT): string
+    public function format(string $format = ''): string
     {
         return $this->getFormatter()->format($this, $format);
     }
