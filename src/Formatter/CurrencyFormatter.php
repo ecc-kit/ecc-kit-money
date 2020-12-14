@@ -7,7 +7,7 @@ use EccKit\Money\Money;
 /**
  * Class CurrencyFormatter.
  */
-class CurrencyFormatter
+class CurrencyFormatter implements Formatter
 {
     /** Default format template */
     public const FORMAT = '%s%f';

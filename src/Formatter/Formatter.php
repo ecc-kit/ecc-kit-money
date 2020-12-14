@@ -5,9 +5,9 @@ namespace EccKit\Money\Formatter;
 use EccKit\Money\Money;
 
 /**
- * Abstract Class Formatter.
+ * Interface Formatter.
  */
-abstract class Formatter
+interface Formatter
 {
     /**
      * Format.
@@ -17,5 +17,5 @@ abstract class Formatter
      *
      * @return mixed
      */
-    abstract public function format(Money $money, string $format = ''): string;
+    public function format(Money $money, string $format = ''): string;
 }
