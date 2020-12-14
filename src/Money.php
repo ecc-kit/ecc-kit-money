@@ -173,8 +173,11 @@ class Money
      */
     protected function modify(int $value): Money
     {
-        $this->value = $value;
-        
-        return $this;
+        return new static(
+            $value,
+            $this->getCurrency(),
+            $this->getCalculator(),
+            $this->getFormatter()
+        );
     }
 }
