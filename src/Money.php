@@ -103,9 +103,9 @@ class Money
      */
     public function add(Money $money): Money
     {
-        $this->modify($this->getCalculator()->add($this, $money));
-        
-        return $this;
+        return $this->applyResult(
+            $this->getCalculator()->add($this, $money)
+        );
     }
     
     /**
@@ -117,9 +117,9 @@ class Money
      */
     public function sub(Money $money): Money
     {
-        $this->modify($this->getCalculator()->sub($this, $money));
-        
-        return $this;
+        return $this->applyResult(
+            $this->getCalculator()->sub($this, $money)
+        );
     }
     
     /**
@@ -132,9 +132,9 @@ class Money
      */
     public function mul(int $value, string $roundingMode = Calculator::ROUND_MATH): Money
     {
-        $this->modify($this->getCalculator()->mul($this, $value, $roundingMode));
-        
-        return $this;
+        return $this->applyResult(
+            $this->getCalculator()->mul($this, $value, $roundingMode)
+        );
     }
     
     /**
@@ -147,9 +147,9 @@ class Money
      */
     public function div(int $value, string $roundingMode = Calculator::ROUND_MATH): Money
     {
-        $this->modify($this->getCalculator()->div($this, $value, $roundingMode));
-        
-        return $this;
+        return $this->applyResult(
+            $this->getCalculator()->div($this, $value, $roundingMode)
+        );
     }
     
     /**
@@ -165,13 +165,13 @@ class Money
     }
     
     /**
-     * Modify.
+     * Apply calculation result.
      *
      * @param int $value Value
      *
      * @return $this
      */
-    protected function modify(int $value): Money
+    protected function applyResult(int $value): Money
     {
         return new static(
             $value,
