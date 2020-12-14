@@ -49,7 +49,8 @@ class Money
         return new static(
             $money->getValue(),
             $money->getCurrency(),
-            $money->getCalculator()
+            $money->getCalculator(),
+            $money->getFormatter()
         );
     }
     
